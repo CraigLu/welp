@@ -1,6 +1,38 @@
-<h2><%= @website.url %></h2>
-<h3><%= @website.description %></h3>
+<div class="container">
+	<div class="website-page">
+	<h1 class="website-title"><%= @website.url %></h2>
+	<h3 class="website-desc"><%= @website.description %></h3>
 
-<%= link_to "Back", websites_path %></br>
-<%= link_to "Admin Only: Edit", edit_website_path(@website) %></br>
-<%= link_to "Admin Only: Delete", website_path(@website), method: :delete, data: { confirm: "Are you sure?" } %>
+	<div class="reviews">
+		<h2>Reviews</h2>
+		<%= render @website.reviews %>
+		<div>
+			<%= link_to "Add Review", new_website_review_path(@website), class: "btn" %>
+		</div>
+	</div>
+
+	<%= link_to "Back", websites_path,  class: "btn"%>
+	<%= link_to "Admin Only: Edit", edit_website_path(@website), class: "btn"%>
+	<%= link_to "Admin Only: Delete", website_path(@website), method: :delete, data: { confirm: "Are you sure?" }, class: "btn"%>
+	</div>
+</div>
+
+<script>
+	$('.review-rating').raty({
+		readOnly: true,
+		score: function() {
+			return $(this).attr('data-score');
+		},
+		path: '/assets/'
+	});
+</script>
+
+<script>
+	$('.average-review-rating').raty({
+		readOnly: true,
+		path: '/assets/',
+		score: function(){
+			return $(this).attr('data-score')
+		}
+	});
+</script>

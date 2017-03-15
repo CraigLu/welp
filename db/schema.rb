@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170314181419) do
+ActiveRecord::Schema.define(version: 20170314195525) do
 
   create_table "helpfuls", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "review_id"
@@ -54,7 +54,11 @@ ActiveRecord::Schema.define(version: 20170314181419) do
     t.string   "first_name"
     t.string   "last_name"
     t.date     "birthday"
-    t.integer  "review_count"
+    t.integer  "review_count",           default: 0
+    t.string   "user_img_file_name"
+    t.string   "user_img_content_type"
+    t.integer  "user_img_file_size"
+    t.datetime "user_img_updated_at"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
