@@ -6,7 +6,6 @@ class WebsitesController < ApplicationController
 	end
 
 	def show
-
 	end
 
 	def new
