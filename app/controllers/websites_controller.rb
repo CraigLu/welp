@@ -18,8 +18,19 @@ class WebsitesController < ApplicationController
 		@site_domain = URI.parse(@uri).host
 		@website = Website.find_by(url: @site_domain)
 
-		if @website.nil?
-			@site_description = MetaInspector.new(@site_domain).best_description
+		# response = Faraday.get @site_domain
+
+		if @website.nil?  # and response.status == "200"
+			# @meta_site = MetaInspector.new(@site_domain)
+			# @site_description = @meta_site.best_description
+
+			begin
+			  # page = MetaInspector.new(url)
+			  @meta_site = MetaInspector.new(@site_domain)
+			  @site_description = @meta_site.best_description
+			rescue MetaInspector::Error
+			  @site_description = nil
+			end
 
 			if @site_description.nil?
 				@site_description = 'No description available'
