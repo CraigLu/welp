@@ -3,4 +3,5 @@ Rails.application.routes.draw do
 		registrations:'users/registrations'
 	}
 	root 'homes#index'
+	get 'users/:id' => 'users#show'
 end

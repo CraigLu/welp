@@ -1,0 +1,11 @@
+<div class="container">
+	<div class="user-profile">
+		<div class="container">
+			<h2><%= @user.first_name + " " + @user.last_name %></h2>
+			<%= image_tag @user.user_img.url(:profile) %>
+			<p>
+				<label>Number of Reviews:</label> <%= @user.review_count%>
+			</p>
+		</div>
+	</div>
+</div>
