@@ -14,10 +14,17 @@ class WebsitesController < ApplicationController
 	end
 
 	def create
-		@website = Website.find_by(url: website_params[:url])	
+		@website = Website.find_by(url: website_params[:url])
+
 
 		if @website.nil?
-			@website = Website.new(website_params)
+			@site_description = MetaInspector.new(website_params[:url]).best_description
+
+			if @site_description.nil?
+				@site_description = 'No description available'
+			end
+
+			@website = Website.new(url: website_params[:url], description: @site_description)
 
 			if @website.save
 				redirect_to websites_path
@@ -47,7 +54,7 @@ class WebsitesController < ApplicationController
 
 	private
 		def website_params
-			params.require(:website).permit(:url, :description)
+			params.require(:website).permit(:url)
 		end
 
 		def find_website
