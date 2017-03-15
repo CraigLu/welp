@@ -1,0 +1,6 @@
+<h2><%= @website.url %></h2>
+<h3><%= @website.description %></h3>
+
+<%= link_to "Back", websites_path %></br>
+<%= link_to "Admin Only: Edit", edit_website_path(@website) %></br>
+<%= link_to "Admin Only: Delete", website_path(@website), method: :delete, data: { confirm: "Are you sure?" } %>

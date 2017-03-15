@@ -3,7 +3,7 @@ class CreateWebsites < ActiveRecord::Migration[5.0]
     create_table :websites do |t|
       t.string :url
       t.text :description
-      t.integer :tag_id, array:true, default: []
+      t.integer :tag_id
 
       t.timestamps
     end

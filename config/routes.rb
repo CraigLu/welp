@@ -3,5 +3,5 @@ Rails.application.routes.draw do
 		registrations:'users/registrations'
 	}
   resources :websites
-	root 'homes#index'
+	root 'homes#index'	
 end
