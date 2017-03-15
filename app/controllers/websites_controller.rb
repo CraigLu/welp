@@ -14,17 +14,18 @@ class WebsitesController < ApplicationController
 	end
 
 	def create
-		@website = Website.find_by(url: website_params[:url])
-
+		@uri = website_params[:url].start_with?('http') ? website_params[:url] : "http://" + website_params[:url]
+		@site_domain = URI.parse(@uri).host
+		@website = Website.find_by(url: @site_domain)
 
 		if @website.nil?
-			@site_description = MetaInspector.new(website_params[:url]).best_description
+			@site_description = MetaInspector.new(@site_domain).best_description
 
 			if @site_description.nil?
 				@site_description = 'No description available'
 			end
 
-			@website = Website.new(url: website_params[:url], description: @site_description)
+			@website = Website.new(url: @site_domain, description: @site_description)
 
 			if @website.save
 				redirect_to websites_path
