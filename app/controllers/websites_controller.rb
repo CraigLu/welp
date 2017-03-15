@@ -14,12 +14,18 @@ class WebsitesController < ApplicationController
 	end
 
 	def create
-		@website = Website.new(website_params)
+		@website = Website.find_by(url: website_params[:url])	
 
-		if @website.save
-			redirect_to websites_path
+		if @website.nil?
+			@website = Website.new(website_params)
+
+			if @website.save
+				redirect_to websites_path
+			else
+				render 'new'
+			end
 		else
-			render 'new'
+			redirect_to website_path(@website)
 		end
 	end
 
