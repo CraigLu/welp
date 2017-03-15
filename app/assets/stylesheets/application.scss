@@ -90,6 +90,33 @@ p.alert, p.notice {
 	color: #fff;
 }
 
+/* Signup/Login form styles */
+
+.signup-form {
+	@include background-tile;
+
+	h2 {
+		margin-top: 0;
+	}
+
+}
+
+.login-form {
+	@include background-tile;
+
+	h2 {
+		margin-top: 0;
+	}
+}
+
+.edit-user-form {
+	@include background-tile;
+
+	h2 {
+		margin-top: 0;
+	}
+}
+
 .website-page {
 	@include background-tile;
 
@@ -116,6 +143,21 @@ p.alert, p.notice {
 		margin-top: 15px;
 	}
 
+}
+
+/*user profile*/
+.user-profile {
+	@include background-tile;
+
+	h2 {
+		margin-top: 0;
+	}
+
+}
+
+.profile-picture{
+	height: 100px;
+	width: 100px;
 }
 
 .reviews {

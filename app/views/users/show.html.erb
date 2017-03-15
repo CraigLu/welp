@@ -1,0 +1,35 @@
+<div class="container">
+	<div class="user-profile">
+		<div class="container">
+				<h2><%= @user.first_name + " " + @user.last_name %></h2>
+
+			<%= image_tag @user.user_img.url(:profile) %>
+			<p>
+				<label>Number of Reviews:</label> <%= @user.review_count%>
+			</p>
+
+			<div class="container">
+				<div class="reviews">
+					<h2>Reviews made by <%= @user.first_name + " " + @user.last_name %></h2>
+					<%= render @user.reviews %>
+				</div>
+			</div>
+			
+			<% if user_signed_in? %>
+				<% if @user.id = current_user.id %>
+					<%= link_to "Edit Profile", edit_user_registration_path %>
+				<% end %>
+			<% end %>
+		</div>
+	</div>
+</div>
+
+<script>
+	$('.review-rating').raty({
+		readOnly: true,
+		score: function() {
+			return $(this).attr('data-score');
+		},
+		path: '/assets/'
+	});
+</script>
