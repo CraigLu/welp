@@ -1,0 +1,6 @@
+<h1>Websites</h1>
+<%= link_to "Add a new Website", new_website_path %>
+
+<% @websites.each do |website| %>
+	<h2><%= link_to website.url, website_path(website) %></h2>
+<% end %>

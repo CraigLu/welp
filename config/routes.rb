@@ -2,7 +2,10 @@ Rails.application.routes.draw do
 	devise_for :users, controllers: {
 		registrations:'users/registrations'
 	}
-  resources :websites
-	root 'homes#index'
+
 	get 'users/:id' => 'users#show'
+	resources :websites do
+		resources :reviews
+	end
+	root 'homes#index'	
 end
