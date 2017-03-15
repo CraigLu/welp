@@ -2,6 +2,8 @@ class ReviewsController < ApplicationController
 	before_action :find_website
 	before_action :find_review, only: [:edit, :update, :destroy]
 	before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+	after_action :increment_review_count, only: :create
+	after_action :decrement_review_count, only: :destroy
 	def new
 		@reviews = Review.new
 	end
@@ -50,4 +52,11 @@ class ReviewsController < ApplicationController
 			@review = Review.find(params[:id])
 		end
 
+		def increment_review_count
+			current_user.increment!(:review_count)
+		end
+
+		def decrement_review_count
+			current_user.decrement!(:review_count)
+		end
 end

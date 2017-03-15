@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 		registrations:'users/registrations'
 	}
 
-	get 'users/:id' => 'users#show'
+	get 'users/:id' => 'users#show', as: 'user_profile'
 	resources :websites do
 		resources :reviews
 	end
