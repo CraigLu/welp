@@ -1,4 +1,7 @@
+require 'net/http'
+
 class WebsitesController < ApplicationController
+	helper_method :find_logo, :redirect_ext
 	before_action :find_website, only: [:show, :edit, :update, :destroy]
 
 	def index
@@ -26,7 +29,7 @@ class WebsitesController < ApplicationController
 			begin
 			  # page = MetaInspector.new(url)
 			  @meta_site = MetaInspector.new(@site_domain)
-			  @site_description = @meta_site.best_description
+			  @site_description = @meta_site.description
 			rescue MetaInspector::Error
 			  @site_description = nil
 			end
@@ -61,6 +64,19 @@ class WebsitesController < ApplicationController
 	def destroy
 		@website.destroy
 		redirect_to websites_path
+	end
+
+	def find_logo(web_url)
+		@img_url = 'http://logo.clearbit.com/' + web_url
+		res = Net::HTTP.get_response(URI.parse(@img_url))
+		@img_url = 'http://' + web_url + '/favicon.ico' unless res.code.to_i >= 200 && res.code.to_i < 400 #good codes will be betweem 200 - 399		
+		return @img_url
+	end
+
+	def redirect_ext(web_url)
+		if (!web_url.nil?)
+			redirect_to("http://" + web_url)
+		end
 	end
 
 	private

@@ -1,22 +1,31 @@
 <h1>Websites</h1>
 <%= link_to "Add a new Website", new_website_path %>
 
-<div class="row">
-	<% @websites.each do |website| %>
+<% @websites.each do |website| %>
+	<div class="row">
+	
+		<div class="col-md-2">
+			<%= image_tag find_logo(website.url), class: "website" %>
+		</div>
 
-		
-			<%
-				img_url = 'http://logo.clearbit.com/' + website.url
-				res = Net::HTTP.get_response(URI.parse(img_url))
-				img_url = 'http://' + website.url + '/favicon.ico' unless res.code.to_i >= 200 && res.code.to_i < 400 #good codes will be betweem 200 - 399		
-				#res = Net::HTTP.get_response(URI.parse(img_url))
-				#img_url = 'Image Unavailable (PUT DEFAULT HERE)' unless res.code.to_i >= 200 && res.code.to_i < 400 #good codes will be betweem 200 - 399		
-			%>	
-
-			<div class="col-md-3">
-				<%= image_tag img_url, class: "website" %>
+		<div class="col-md-10">
+			<div class="row">
 				<h2><%= link_to website.url, website_path(website) %></h2>
 			</div>
+
+			<div class="row">
+				Rating: Hello			
+			</div>
+
+			<div class="row">
+				<%= website.description %>
+			</div>
+
+			<div class="row">
+				Category: ???
+			</div>
 		
-	<% end %>
-</div>
+		</div>
+		
+	</div>
+<% end %>

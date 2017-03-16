@@ -1,7 +1,21 @@
 <div class="container">
 	<div class="website-page">
-	<h1 class="website-title"><%= @website.url %></h2>
-	<h3 class="website-desc"><%= @website.description %></h3>
+
+		<h1 class="website-title"><%= @website.url %></h1>
+
+		<div class="row">
+			<div class="col-md-3">
+				<%= image_tag find_logo(@website.url), class: "website-show" %>
+			</div>	
+
+			<div class="col-md-9">
+				<h3 class="website-desc"><%= @website.description %></h3>
+			</div>
+		</div>
+
+		<div class="row">
+			<%= link_to "Visit this site", "http://" + @website.url, class: "btn", target: :_blank %>
+		</div>
 
 	<div class="reviews">
 		<h2>Reviews</h2>
