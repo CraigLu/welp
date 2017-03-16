@@ -29,7 +29,12 @@ class WebsitesController < ApplicationController
 			begin
 			  # page = MetaInspector.new(url)
 			  @meta_site = MetaInspector.new(@site_domain)
-			  @site_description = @meta_site.description
+			  	@site_description = @meta_site.description
+			  if (!@meta_site.meta['keywords'].nil?)
+			  	# puts "TAGS HERE: " + @meta_site.meta['keywords']
+			  else
+			  	# puts "No tags available"
+			  end
 			rescue MetaInspector::Error
 			  @site_description = nil
 			end
