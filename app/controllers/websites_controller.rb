@@ -9,6 +9,11 @@ class WebsitesController < ApplicationController
 	end
 
 	def show
+		if @website.reviews.blank?
+            @average_review = 0
+        else
+            @average_review = @website.reviews.average(:rating).round(2)
+        end
 	end
 
 	def new
@@ -31,9 +36,9 @@ class WebsitesController < ApplicationController
 			  @meta_site = MetaInspector.new(@site_domain)
 			  	@site_description = @meta_site.description
 			  if (!@meta_site.meta['keywords'].nil?)
-			  	# puts "TAGS HERE: " + @meta_site.meta['keywords']
+			  	puts "TAGS HERE: " + @meta_site.meta['keywords']
 			  else
-			  	# puts "No tags available"
+			  	puts "No tags available"
 			  end
 			rescue MetaInspector::Error
 			  @site_description = nil

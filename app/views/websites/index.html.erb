@@ -14,7 +14,7 @@
 			</div>
 
 			<div class="row">
-				Rating: Hello			
+ 				<span class="average-review-rating" data-score=<%= website.reviews.average(:rating) %>></span>	
 			</div>
 
 			<div class="row">
@@ -29,3 +29,23 @@
 		
 	</div>
 <% end %>
+
+<script>
+	$('.review-rating').raty({
+		readOnly: true,
+		score: function() {
+			return $(this).attr('data-score');
+		},
+		path: '/assets/'
+	});
+</script>
+
+<script>
+	$('.average-review-rating').raty({
+		readOnly: true,
+		path: '/assets/',
+		score: function(){
+			return $(this).attr('data-score')
+		}
+	});
+</script>
