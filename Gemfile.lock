@@ -134,6 +134,10 @@ GEM
       cocaine (~> 0.5.5)
       mime-types
       mimemagic (~> 0.3.0)
+    papercrop (0.3.0)
+      jquery-rails
+      paperclip (>= 3.4)
+      rails (>= 3.1)
     public_suffix (2.0.5)
     puma (3.8.1)
     rack (2.0.1)
@@ -228,6 +232,7 @@ DEPENDENCIES
   metainspector
   mysql2 (>= 0.3.18, < 0.5)
   paperclip (~> 5.1)
+  papercrop (~> 0.3.0)
   puma (~> 3.0)
   rails (~> 5.0.2)
   sass-rails (~> 5.0)
