@@ -6,6 +6,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_attached_file :user_img, :styles => {profile: "100x100#", :large => "500x500>" }, default_url: "http://www.diybackyardworkshop.com/wp-content/uploads/2012/01/NoAvatar.png"
-  crop_attached_file :user_img
   validates_attachment_content_type :user_img, content_type: /\Aimage\/.*\z/
 end
