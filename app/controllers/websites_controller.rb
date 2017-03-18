@@ -11,6 +11,7 @@ class WebsitesController < ApplicationController
 	end
 
 	def show
+		@tags = Tag.where(website_id: @website['id'])
 	end
 
 	def new
