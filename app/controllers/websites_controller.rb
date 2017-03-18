@@ -16,7 +16,6 @@ class WebsitesController < ApplicationController
         else
             @average_review = @website.reviews.average(:rating).round(2)
         end
-		@tags = Tag.where(website_id: @website['id'])
 	end
 
 	def new

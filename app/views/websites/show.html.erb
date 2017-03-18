@@ -16,9 +16,7 @@
 
 				<div class="row">
 					Tags:
-					<% @tags.each do |tag| %>
-						<%= tag.title %>
-					<% end %>					
+					<%= render @website.tags %>				
 				</div>
 
 				<div>
