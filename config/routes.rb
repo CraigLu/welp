@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 	get 'users/:id' => 'users#show', as: 'user_profile'
 	resources :websites do
 		resources :reviews
+		resources :tags
 	end
 	root 'homes#index'	
 end
