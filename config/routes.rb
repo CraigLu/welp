@@ -9,5 +9,5 @@ Rails.application.routes.draw do
 		resources :reviews
 		resources :tags
 	end
-	root 'homes#index'	
+	root 'websites#index'
 end

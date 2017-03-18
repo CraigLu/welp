@@ -50,21 +50,27 @@
 </div>
 
 <script>
-	$('.review-rating').raty({
-		readOnly: true,
-		score: function() {
-			return $(this).attr('data-score');
-		},
-		path: '/assets/'
-	});
+  if(a==null){
+      $('.review-rating').raty({
+        readOnly: true,
+        score: function() {
+          return $(this).attr('data-score');
+        },
+        path: '/assets/'
+      });
+      var a = 1;
+  }
 </script>
 
 <script>
-	$('.average-review-rating').raty({
-		readOnly: true,
-		path: '/assets/',
-		score: function(){
-			return $(this).attr('data-score')
-		}
-	});
+  if(b==null){
+      $('.average-review-rating').raty({
+          readOnly: true,
+          path: '/assets/',
+          score: function(){
+              return $(this).attr('data-score')
+          }
+      });
+      var b=1;
+  }
 </script>

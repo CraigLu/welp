@@ -19,14 +19,12 @@ class WebsitesController < ApplicationController
 			@tags.each do |tag|
 				websiteMatches.push(Website.find(tag.website_id))
 			end
-
-			@websites = @tempWebsites
-
+			@tempWebsites.each do |website|
+				websiteMatches.push(website)
+			end
+			@websites = websiteMatches.uniq
 		else
 			@websites = Website.all.order("created_at DESC")
-		end
-		@tags.each do |result|
-			puts result.title
 		end
 	end
 
