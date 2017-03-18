@@ -16,9 +16,11 @@
 
 				<div class="row">
 					Tags:
-					<% @tags.each do |tag| %>
-						<%= tag.title %>
-					<% end %>					
+					<%= render @website.tags %>				
+				</div>
+
+				<div>
+					<%= link_to "Add Tag", new_website_tag_path(@website) %>
 				</div>
 
 			</div>

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 	resources :websites do
     resources :tags
 		resources :reviews
+		resources :tags
 	end
 	root 'homes#index'	
 end
