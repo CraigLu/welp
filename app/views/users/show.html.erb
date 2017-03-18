@@ -4,19 +4,23 @@
 			<%= image_tag @user.user_img.url(:profile) %>
       <h2><%= @user.first_name + " " + @user.last_name %></h2>
       <% if @user.review_count > 0 %>
-        <p>
-          <label>Number of Reviews:</label> <%= @user.review_count%>
-        </p>
+          <p>
+            <label>Number of Reviews:</label> <%= @user.review_count%>
+          </p>
 
 
-			<div class="container">
-				<div class="reviews">
-					<h2>Reviews made by <%= @user.first_name + " " + @user.last_name %></h2>
-					<% @user.reviews.each do |review| %>
-						<%= render :partial => "reviews/profile", locals: {review: review} %>
-					<% end %>
-				</div>
-			</div>
+        <div class="container">
+          <div class="reviews">
+            <h2>Reviews made by <%= @user.first_name + " " + @user.last_name %></h2>
+            <% @user.reviews.each do |review| %>
+              <%= render :partial => "reviews/profile", locals: {review: review} %>
+            <% end %>
+          </div>
+        </div>
+      <% else %>
+          <div><h4>This user has no reviews yet.</h4></div>
+      <% end %>
+
 			<% if user_signed_in? %>
 				<% if @user.id = current_user.id %>
 					<%= link_to "Edit Profile", edit_user_registration_path %>
