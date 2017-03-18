@@ -29,6 +29,11 @@ class TagsController < ApplicationController
 		end
 	end
 
+	def destroy
+		@tag.destroy
+		redirect_to website_path(@website)
+	end
+
 	private
 		def tag_params
 			params.require(:tag).permit(:title)
