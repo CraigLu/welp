@@ -94,6 +94,46 @@ class WebsitesController < ApplicationController
 			params.require(:website).permit(:url)
 		end
 
+		def create_website
+			@uri = website_params[:url].start_with?('http') ? website_params[:url] : "http://" + website_params[:url]
+			@site_domain = URI.parse(@uri).host
+			@website = Website.find_by(url: @site_domain)
+
+			# response = Faraday.get @site_domain
+
+			if @website.nil?  # and response.status == "200"
+				# @meta_site = MetaInspector.new(@site_domain)
+				# @site_description = @meta_site.best_description
+
+				begin
+					# page = MetaInspector.new(url)
+					@meta_site = MetaInspector.new(@site_domain)
+					@site_description = @meta_site.description
+					if (!@meta_site.meta['keywords'].nil?)
+						puts "TAGS HERE: " + @meta_site.meta['keywords']
+					else
+						puts "No tags available"
+					end
+				rescue MetaInspector::Error
+					@site_description = nil
+				end
+
+				if @site_description.nil?
+					@site_description = 'No description available'
+				end
+
+				@website = Website.new(url: @site_domain, description: @site_description)
+
+				if @website.save
+					redirect_to websites_path
+				else
+					render 'new'
+				end
+			else
+				redirect_to website_path(@website)
+			end
+		end
+
 		def find_website
 			@website = Website.find(params[:id])
 		end
