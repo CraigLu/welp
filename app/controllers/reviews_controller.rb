@@ -21,11 +21,12 @@ class ReviewsController < ApplicationController
 
 	def edit
 		@review = Review.find(params[:id])
+		session[:return_to] ||= request.referer
 	end
 
 	def update
 		if @review.update(review_params)
-			redirect_to website_path(@website)
+			redirect_to session.delete(:return_to)
 		else
 			render 'edit'
 		end

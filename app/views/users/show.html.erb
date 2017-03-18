@@ -9,13 +9,14 @@
         </p>
 
 
-        <div class="container">
-          <div class="reviews">
-            <h2>Reviews made by <%= @user.first_name + " " + @user.last_name %></h2>
-            <%= render @user.reviews %>
-          </div>
-        </div>
-      <% end %>
+			<div class="container">
+				<div class="reviews">
+					<h2>Reviews made by <%= @user.first_name + " " + @user.last_name %></h2>
+					<% @user.reviews.each do |review| %>
+						<%= render :partial => "reviews/profile", locals: {review: review} %>
+					<% end %>
+				</div>
+			</div>
 			<% if user_signed_in? %>
 				<% if @user.id = current_user.id %>
 					<%= link_to "Edit Profile", edit_user_registration_path %>

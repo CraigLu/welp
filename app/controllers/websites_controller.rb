@@ -1,6 +1,8 @@
 require 'net/http'
+require 'common_functions'
 
 class WebsitesController < ApplicationController
+	include CommonFunctions
 	helper_method :find_logo, :redirect_ext
 	before_action :find_website, only: [:show, :edit, :update, :destroy]
 
@@ -14,6 +16,7 @@ class WebsitesController < ApplicationController
         else
             @average_review = @website.reviews.average(:rating).round(2)
         end
+		@tags = Tag.where(website_id: @website['id'])
 	end
 
 	def new
@@ -30,16 +33,20 @@ class WebsitesController < ApplicationController
 		if @website.nil?  # and response.status == "200"
 			# @meta_site = MetaInspector.new(@site_domain)
 			# @site_description = @meta_site.best_description
+			has_tags = false
 
 			begin
 			  # page = MetaInspector.new(url)
 			  @meta_site = MetaInspector.new(@site_domain)
-			  	@site_description = @meta_site.description
+			  @site_description = @meta_site.description
+
 			  if (!@meta_site.meta['keywords'].nil?)
-			  	puts "TAGS HERE: " + @meta_site.meta['keywords']
+			  	@tags_list = @meta_site.meta['keywords']
+			  	has_tags = true			  	
 			  else
-			  	puts "No tags available"
+			  	@tags_list = "No tags available"
 			  end
+
 			rescue MetaInspector::Error
 			  @site_description = nil
 			end
@@ -52,6 +59,10 @@ class WebsitesController < ApplicationController
 
 			if @website.save
 				redirect_to websites_path
+
+				if has_tags
+					create_tags(@tags_list, @website.id)
+				end
 			else
 				render 'new'
 			end
