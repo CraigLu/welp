@@ -11,7 +11,9 @@
 			<div class="container">
 				<div class="reviews">
 					<h2>Reviews made by <%= @user.first_name + " " + @user.last_name %></h2>
-					<%= render @user.reviews %>
+					<% @user.reviews.each do |review| %>
+						<%= render :partial => "reviews/profile", locals: {review: review} %>
+					<% end %>
 				</div>
 			</div>
 			
