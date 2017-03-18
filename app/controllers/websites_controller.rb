@@ -41,16 +41,10 @@ class WebsitesController < ApplicationController
 			  @site_description = @meta_site.description
 
 			  if (!@meta_site.meta['keywords'].nil?)
-<<<<<<< HEAD
-			  	puts "TAGS HERE: " + @meta_site.meta['keywords']
-			  else
-			  	puts "No tags available"
-=======
 			  	@tags_list = @meta_site.meta['keywords']
 			  	has_tags = true			  	
 			  else
 			  	@tags_list = "No tags available"
->>>>>>> tags
 			  end
 
 			rescue MetaInspector::Error
