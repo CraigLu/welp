@@ -9,8 +9,20 @@
 			</div>
 
 			<div class="col-md-9">
-				<h3 class="website-desc"><%= @website.description %></h3>
+
+				<div class="row">							
+					<h3 class="website-desc"><%= @website.description %></h3>
+				</div>
+
+				<div class="row">
+					Tags:
+					<% @tags.each do |tag| %>
+						<%= tag.title %>
+					<% end %>					
+				</div>
+
 			</div>
+
 			<div>
 				<%= link_to "Visit this site", "http://" + @website.url, class: "btn", target: :_blank %>
 			</div>
