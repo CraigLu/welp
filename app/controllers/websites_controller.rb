@@ -108,7 +108,7 @@ class WebsitesController < ApplicationController
 	def find_logo(web_url)
 		@img_url = 'http://logo.clearbit.com/' + web_url
 		res = Net::HTTP.get_response(URI.parse(@img_url))
-		@img_url = 'http://' + web_url + '/favicon.ico' unless res.code.to_i >= 200 && res.code.to_i < 400 #good codes will be betweem 200 - 399		
+		@img_url = 'http://icons.iconarchive.com/icons/dakirby309/windows-8-metro/256/Folders-OS-Default-Metro-icon.png' unless res.code.to_i >= 200 && res.code.to_i < 400 #good codes will be betweem 200 - 399		
 		return @img_url
 	end
 
