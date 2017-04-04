@@ -44,50 +44,55 @@ class WebsitesController < ApplicationController
 
 	def create
 		@uri = website_params[:url].start_with?('http') ? website_params[:url] : "http://" + website_params[:url]
-		@site_domain = URI.parse(@uri).host.downcase
-		@site_domain = @site_domain.start_with?('www.') ? @site_domain[4..-1] : @site_domain
-		@website = Website.find_by(url: @site_domain)
+		@site_domain = URI.parse(@uri).host
+		# res = Net::HTTP.get(URI.parse(@uri))
 
-		# response = Faraday.get @site_domain
+		if !@site_domain.nil? #&& (res.code.to_i >= 200 && res.code.to_i < 400)
+			@site_domain = @site_domain.downcase
+			@site_domain = @site_domain.start_with?('www.') ? @site_domain[4..-1] : @site_domain
+			@website = Website.find_by(url: @site_domain)
 
-		if @website.nil?  # and response.status == "200"
-			# @meta_site = MetaInspector.new(@site_domain)
-			# @site_description = @meta_site.best_description
-			has_tags = false
+			if @website.nil?  # and response.status == "200"
+				has_tags = false
 
-			begin
-			  # page = MetaInspector.new(url)
-			  @meta_site = MetaInspector.new(@site_domain)
-			  @site_description = @meta_site.description
+				begin
+				  # page = MetaInspector.new(url)
+				  @meta_site = MetaInspector.new(@site_domain)
+				  @site_description = @meta_site.description
 
-			  if (!@meta_site.meta['keywords'].nil?)
-			  	@tags_list = @meta_site.meta['keywords']
-			  	has_tags = true			  	
-			  else
-			  	@tags_list = "No tags available"
-			  end
+				  if (!@meta_site.meta['keywords'].nil?)
+				  	@tags_list = @meta_site.meta['keywords']
+				  	has_tags = true			  	
+				  else
+				  	@tags_list = "No tags available"
+				  end
 
-			rescue MetaInspector::Error
-			  @site_description = nil
-			end
+				rescue MetaInspector::Error
+				  @site_description = nil
+				end
 
-			if @site_description.nil?
-				@site_description = 'No description available'
-			end
+				if @site_description.nil?
+					@site_description = 'No description available'
+				end
 
-			@website = Website.new(url: @site_domain, description: @site_description)
+				@website = Website.new(url: @site_domain, description: @site_description)
 
-			if @website.save
-				redirect_to websites_path
+				if @website.save
+					redirect_to websites_path
 
-				if has_tags
-					create_tags(@tags_list, @website.id)
+					if has_tags
+						create_tags(@tags_list, @website.id)
+					end
+				else
+					render 'new'
 				end
 			else
-				render 'new'
+				redirect_to website_path(@website)
 			end
+
 		else
-			redirect_to website_path(@website)
+			# TODO: Include error message for invalid URL
+			redirect_to new_website_path		
 		end
 	end
 
