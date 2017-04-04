@@ -42,7 +42,8 @@ class WebsitesController < ApplicationController
 
 	def create
 		@uri = website_params[:url].start_with?('http') ? website_params[:url] : "http://" + website_params[:url]
-		@site_domain = URI.parse(@uri).host
+		@site_domain = URI.parse(@uri).host.downcase
+		@site_domain = @site_domain.start_with?('www.') ? @site_domain[4..-1] : @site_domain
 		@website = Website.find_by(url: @site_domain)
 
 		# response = Faraday.get @site_domain
