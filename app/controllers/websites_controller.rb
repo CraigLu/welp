@@ -17,7 +17,9 @@ class WebsitesController < ApplicationController
 			@tags = Tag.search(params[:query], fields: [:title], match: :word_start)
 
 			@tags.each do |tag|
-				websiteMatches.push(Website.find(tag.website_id))
+				if Website.exists?(tag.website_id)
+					websiteMatches.push(Website.find(tag.website_id))
+				end
 			end
 			@tempWebsites.each do |website|
 				websiteMatches.push(website)
