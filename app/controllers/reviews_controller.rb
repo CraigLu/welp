@@ -2,10 +2,17 @@ class ReviewsController < ApplicationController
 	before_action :find_website
 	before_action :find_review, only: [:edit, :update, :destroy]
 	before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+	before_action :validate_user, only: [:edit, :update, :destroy]
 	after_action :increment_review_count, only: :create
 	after_action :decrement_review_count, only: :destroy
 	def new
-		@reviews = Review.new
+		oldReview = Review.find_by(user_id: current_user.id, website_id: params[:website_id])
+		if oldReview.nil?
+			@reviews = Review.new
+		else
+			@review = oldReview
+			redirect_to edit_website_review_path(website_id: params[:website_id], id: oldReview.id)
+		end
 	end
 
 	def create
@@ -59,5 +66,9 @@ class ReviewsController < ApplicationController
 
 		def decrement_review_count
 			current_user.decrement!(:review_count)
+		end
+
+		def validate_user
+			redirect_to(root_url) unless current_user.id == @review.user_id
 		end
 end
