@@ -22,7 +22,7 @@
       <% end %>
 
 			<% if user_signed_in? %>
-				<% if @user.id = current_user.id %>
+				<% if @user.id == current_user.id %>
 					<%= link_to "Edit Profile", edit_user_registration_path %>
 				<% end %>
 			<% end %>
