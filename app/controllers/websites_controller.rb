@@ -12,6 +12,7 @@ class WebsitesController < ApplicationController
 		@tags = []
 		websiteMatches = []
 		Tag.reindex
+		Website.reindex
 		if params[:query].present?
 			@tempWebsites = Website.search(params[:query], fields: [:url], match: :word_start)
 			@tags = Tag.search(params[:query], fields: [:title], match: :word_start)
