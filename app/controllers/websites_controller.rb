@@ -45,9 +45,20 @@ class WebsitesController < ApplicationController
 	def create
 		@uri = website_params[:url].start_with?('http') ? website_params[:url] : "http://" + website_params[:url]
 		@site_domain = URI.parse(@uri).host
+		siteExist = false
 		# res = Net::HTTP.get(URI.parse(@uri))
+		res = nil
 
-		if !@site_domain.nil? #&& (res.code.to_i >= 200 && res.code.to_i < 400)
+		begin
+			res = Faraday.get @uri
+			siteExist = true
+		rescue Faraday::Error::ConnectionFailed => e
+			siteExist = false
+		end
+
+		# puts res.inspect
+
+		if !@site_domain.nil? && siteExist && !res.nil? #&& (res.status.to_i >= 200 && res.status.to_i < 400)
 			@site_domain = @site_domain.downcase
 			@site_domain = @site_domain.start_with?('www.') ? @site_domain[4..-1] : @site_domain
 			@website = Website.find_by(url: @site_domain)
