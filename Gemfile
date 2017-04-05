@@ -21,6 +21,7 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'metainspector'
 gem 'faraday'
+gem 'acts_as_votable'
 
 group :development, :test do
    gem 'byebug', platform: :mri

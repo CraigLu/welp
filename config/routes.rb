@@ -6,7 +6,12 @@ Rails.application.routes.draw do
 	get 'users/:id' => 'users#show', as: 'user_profile'
 	resources :websites do
     resources :tags
-		resources :reviews
+		resources :reviews do
+			member do
+				put "helpful", to: "reviews#upvote"
+				put "unhelpful", to: "reviews#downvote"
+			end
+		end
 		resources :tags
 	end
 	root 'websites#index'

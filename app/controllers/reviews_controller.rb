@@ -1,6 +1,6 @@
 class ReviewsController < ApplicationController
 	before_action :find_website
-	before_action :find_review, only: [:edit, :update, :destroy]
+	before_action :find_review, only: [:edit, :update, :destroy, :upvote, :downvote]
 	before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
 	before_action :validate_user, only: [:edit, :update, :destroy]
 	after_action :increment_review_count, only: :create
@@ -13,6 +13,16 @@ class ReviewsController < ApplicationController
 			@review = oldReview
 			redirect_to edit_website_review_path(website_id: params[:website_id], id: oldReview.id)
 		end
+	end
+
+	def upvote
+		@review.upvote_by current_user
+		redirect_to website_path(@website)
+	end
+
+	def downvote
+		@review.downvote_by current_user
+		redirect_to website_path(@website)
 	end
 
 	def create
