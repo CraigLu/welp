@@ -109,19 +109,33 @@ class WebsitesController < ApplicationController
 	end
 
 	def edit
+		if current_user.isAdmin?
+			@website = Website.find(params[:id])
+			redirect_to website_path(@website)
+		else
+			redirect_to website_path(@website)
+		end
 	end
 
 	def update
-		if @website.update(website_params)
-			redirect_to website_path(@website)
+		if current_user.isAdmin?
+			if @website.update(website_params)
+				redirect_to website_path(@website)
+			else
+				render 'edit'
+			end
 		else
-			render 'edit'
+			redirect_to website_path(@website)
 		end
 	end
 
 	def destroy
-		@website.destroy
-		redirect_to websites_path
+		if current_user.isAdmin?
+			@website.destroy
+			redirect_to websites_path
+		else
+			redirect_to website_path(@website)
+		end
 	end
 
 	def find_logo(web_url)

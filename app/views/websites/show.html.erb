@@ -1,4 +1,7 @@
 <div class="container">
+	<% flash.each do |key, value| %>
+    	<div class="alert alert-<%= key %>"><%= value %></div>
+    <% end %>
 	<div class="website-page">
 
 		<h1 class="website-title"><%= @website.url %></h1>
@@ -44,8 +47,11 @@
 	</div>
 
 	<%= link_to "Back", websites_path,  class: "btn"%>
-	<%= link_to "Admin Only: Edit", edit_website_path(@website), class: "btn"%>
-	<%= link_to "Admin Only: Delete", website_path(@website), method: :delete, data: { confirm: "Are you sure?" }, class: "btn"%>
+
+	<% if current_user.isAdmin? %>
+		<%= link_to "Edit", edit_website_path(@website), class: "btn"%>
+		<%= link_to "Delete", website_path(@website), method: :delete, data: { confirm: "Are you sure?" }, class: "btn"%>
+	<% end %>
 	</div>
 </div>
 

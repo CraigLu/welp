@@ -16,13 +16,23 @@ class ReviewsController < ApplicationController
 	end
 
 	def upvote
-		@review.upvote_by current_user
-		redirect_to website_path(@website)
+		if(@review.user_id != current_user.id)
+			@review.upvote_by current_user
+			redirect_to website_path(@website)
+		else
+			flash[:info] = "You cannot upvote or downvote your own review."
+			redirect_to website_path(@website)
+		end
 	end
 
 	def downvote
-		@review.downvote_by current_user
-		redirect_to website_path(@website)
+		if(@review.user_id != current_user.id)
+			@review.downvote_by current_user
+			redirect_to website_path(@website)
+		else
+			flash[:info] = "You cannot upvote or downvote your own review."
+			redirect_to website_path(@website)
+		end
 	end
 
 	def create
