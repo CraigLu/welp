@@ -5,11 +5,11 @@
 	<div class="container">
 		<%= image_tag @user.user_img.url(:profile) %>
     <h2><%= @user.first_name + " " + @user.last_name %></h2>
+    <label>Joined:</label> <%= @user.created_at.strftime("%-m/%-d/%Y") %>
     <% if @user.review_count > 0 %>
-        <p>
-          <label>Number of Reviews:</label> <%= @user.review_count%>
-        </p>
-
+      <p>
+        <label>Number of Reviews:</label> <%= @user.review_count%>
+      </p>
 
       <div class="container">
         <div class="reviews">
