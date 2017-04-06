@@ -37,21 +37,20 @@
 				<span class="number-of-reviews">Based on <%= @website.reviews.count %> reviews</span>
 			</div>	
 		</div>
-
-	<div class="reviews">
-		<h2>Reviews</h2>
-		<%= render @website.reviews %>
-		<div>
-			<%= link_to "Add Review", new_website_review_path(@website), class: "btn" %>
+		<div class="container">
+			<div class="reviews">
+				<h2>Reviews</h2>
+				<%= render @website.reviews %>
+				<div>
+					<%= link_to "Add Review", new_website_review_path(@website), class: "btn" %>
+				</div>
+			</div>
+			<%= link_to "Back", websites_path,  class: "btn"%>
+			<% if current_user.isAdmin? %>
+				<%= link_to "Edit website", edit_website_path(@website), class: "btn"%>
+				<%= link_to "Delete website", website_path(@website), method: :delete, data: { confirm: "Are you sure?" }, class: "btn"%>
+			<% end %>
 		</div>
-	</div>
-
-	<%= link_to "Back", websites_path,  class: "btn"%>
-
-	<% if current_user.isAdmin? %>
-		<%= link_to "Edit", edit_website_path(@website), class: "btn"%>
-		<%= link_to "Delete", website_path(@website), method: :delete, data: { confirm: "Are you sure?" }, class: "btn"%>
-	<% end %>
 	</div>
 </div>
 

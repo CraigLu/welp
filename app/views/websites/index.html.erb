@@ -17,29 +17,29 @@
 <% end %>
 <% @websites.each do |website| %>
     <br>
-    <div class = "user-profile">
-	<div class="row">
+    <div class = "website-page">
+		<div class="row">
 
-		<div class="col-sm-2">
-			<%= image_tag find_logo(website.url), class: "website" %>
+			<div class="col-md-2">
+				<%= image_tag find_logo(website.url), class: "website" %>
+			</div>
+
+			<div class="col-md-10">
+				<div class="row">
+					<h2 class="website-title"><%= link_to website.url, website_path(website) %></h2>
+				</div>
+
+				<div class="row">
+	 				<span class="average-review-rating" data-score=<%= website.reviews.average(:rating) %>></span>	
+				</div>
+
+				<div class="row">
+					<p class="website-desc"><%= website.description %></p>
+				</div>
+			
+			</div>
+			
 		</div>
-
-		<div class="col-sm-10">
-			<div class="row">
-				<h2><%= link_to website.url, website_path(website) %></h2>
-			</div>
-
-			<div class="row">
- 				<span class="average-review-rating" data-score=<%= website.reviews.average(:rating) %>></span>	
-			</div>
-
-			<div class="row">
-				<%= website.description %>
-			</div>
-		
-		</div>
-		
-	</div>
     </div>
 <% end %>
 
