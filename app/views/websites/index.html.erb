@@ -1,0 +1,73 @@
+<% flash.each do |key, value| %>
+	<div class="alert alert-<%= key %>"><%= value %></div>
+<% end %>
+<h1>Websites</h1>
+<% if user_signed_in? %>
+    <%= link_to "Add a new Website", new_website_path %>
+<% end %>
+<%= form_tag websites_path, method: :get do %>
+    <div class='form-group row'>
+      <div class = "col-sm-11" style = "padding-right: 0;">
+        <%= text_field_tag :query, params[:query], class: 'form-control'%>
+      </div>
+      <div class = "col-sm-1 input-block-level" style = "padding-right: 0;">
+        <%= submit_tag 'Search', class: 'btn btn-default input-block-level' %>
+      </div>
+    </div>
+<% end %>
+<% @websites.each do |website| %>
+    <br>
+    <div class = "website-page">
+		<div class="row">
+
+			<div class="col-md-2">
+				<%= image_tag find_logo(website.url), class: "website" %>
+			</div>
+
+			<div class="col-md-10">
+				<div class="row">
+					<h2 class="website-title"><%= link_to website.url, website_path(website) %></h2>
+				</div>
+
+				<div class="row">
+	 				<span class="average-review-rating" data-score=<%= website.reviews.average(:rating) %>></span>	
+				</div>
+
+				<div class="row">
+					<p class="website-desc"><%= website.description %></p>
+				</div>
+			
+			</div>
+			
+		</div>
+    </div>
+<% end %>
+
+<% if @websites.empty? %>
+    <h4>No matches found</h4>
+    <%= link_to "Would you like to make it?", new_website_path %>
+<% end %>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+	$('.review-rating').raty({
+		readOnly: true,
+		score: function() {
+			return $(this).attr('data-score');
+		},
+		path: '/assets/'
+	});
+</script>
+
+<script>
+  if(x == null){
+      $('.average-review-rating').raty({
+          readOnly: true,
+          path: '/assets/',
+          score: function(){
+              return $(this).attr('data-score')
+          }
+      });
+      var x = 1;
+  }
+</script>

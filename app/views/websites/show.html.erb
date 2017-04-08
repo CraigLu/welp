@@ -1,0 +1,81 @@
+<div class="container">
+	<% flash.each do |key, value| %>
+    	<div class="alert alert-<%= key %>"><%= value %></div>
+    <% end %>
+	<div class="website-page">
+
+		<h1 class="website-title"><%= @website.url %></h1>
+
+		<div class="row">
+			<div class="col-md-3">
+				<%= image_tag find_logo(@website.url), class: "website-show" %>
+			</div>
+
+			<div class="col-md-9">
+
+				<div class="row">							
+					<h3 class="website-desc"><%= @website.description %></h3>
+				</div>
+
+				<div class="row">
+					Tags:
+					<%= render @website.tags %>				
+				</div>
+
+				<div>
+					<%= link_to "Add Tag", new_website_tag_path(@website) %>
+				</div>
+
+			</div>
+
+			<div>
+				<%= link_to "Visit this site", "http://" + @website.url, class: "btn", target: :_blank %>
+			</div>
+			<div class="col-md-8">
+				<h2 class="avg-rating">Average Rating</h2>
+				<div class="average-review-rating" data-score=<%= @average_review %>></div>
+				<span class="number-of-reviews">Based on <%= @website.reviews.count %> reviews</span>
+			</div>	
+		</div>
+		<div class="container">
+			<div class="reviews">
+				<h2>Reviews</h2>
+				<%= render @website.reviews %>
+				<div>
+					<%= link_to "Add Review", new_website_review_path(@website), class: "btn" %>
+				</div>
+			</div>
+			<%= link_to "Back", websites_path,  class: "btn"%>
+			<% if current_user.isAdmin? %>
+				<%= link_to "Edit website", edit_website_path(@website), class: "btn"%>
+				<%= link_to "Delete website", website_path(@website), method: :delete, data: { confirm: "Are you sure?" }, class: "btn"%>
+			<% end %>
+		</div>
+	</div>
+</div>
+
+<script>
+  if(a==null){
+      $('.review-rating').raty({
+        readOnly: true,
+        score: function() {
+          return $(this).attr('data-score');
+        },
+        path: '/assets/'
+      });
+      var a = 1;
+  }
+</script>
+
+<script>
+  if(b==null){
+      $('.average-review-rating').raty({
+          readOnly: true,
+          path: '/assets/',
+          score: function(){
+              return $(this).attr('data-score')
+          }
+      });
+      var b=1;
+  }
+</script>

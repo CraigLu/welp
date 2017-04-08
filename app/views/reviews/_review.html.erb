@@ -1,0 +1,26 @@
+<div class="review">
+	<% userName = User.find(review.user_id).first_name + " " + User.find(review.user_id).last_name %>
+	<h4><%= link_to userName, user_profile_path(review.user_id)  %></h3>
+	<div class="review-rating" data-score="<%= review.rating %>"></div>
+	<p class="review-commnet"><%= review.description %></p>
+
+	
+
+	<% if user_signed_in? %>
+
+		<%= review.get_upvotes.size %>
+		<%= link_to image_tag("fbthumbsup.png"), helpful_website_review_path(website_id: review.website_id, id: review.id), method: :put %>
+		
+		<%= review.get_downvotes.size %>
+		<%= link_to image_tag("fbthumbsdown.png"), unhelpful_website_review_path(website_id: review.website_id, id: review.id), method: :put %>
+
+
+		<% if review.user.id == current_user.id %>
+			<div class="links btn-group">
+				<%= link_to "Edit", edit_website_review_path(review.website, review), class: "btn btn-custom" %>
+				<%= link_to "Delete", website_review_path(review.website, review), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-custom" %>
+			</div>
+		<% end %>
+	<% end %>
+
+</div>
