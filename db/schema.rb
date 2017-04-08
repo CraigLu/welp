@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 20170406173129) do
     t.text     "description", limit: 65535
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.text     "tags_list",   limit: 65535
   end
 
 end

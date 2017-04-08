@@ -1,1 +1,1 @@
-<%= link_to tag.title, website_tag_path(tag.website, tag), method: :delete %> 
+<%= link_to tag.title, website_tag_path(tag.website, tag), method: :delete, data: {confirm: "Are you sure you want to remove this tag?"} %> 

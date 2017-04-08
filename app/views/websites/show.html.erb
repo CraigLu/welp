@@ -23,7 +23,7 @@
 				</div>
 
 				<div>
-					<%= link_to "Add Tag", new_website_tag_path(@website) %>
+					<%= button_to "Add a Tag", new_website_tag_path(@website), :method => :get, class: "btn btn-default" %>
 				</div>
 
 			</div>
@@ -42,13 +42,12 @@
 				<h2>Reviews</h2>
 				<%= render @website.reviews %>
 				<div>
-					<%= link_to "Add Review", new_website_review_path(@website), class: "btn" %>
+					<%= button_to "Add a Review", new_website_review_path(@website), :method => :get, class: "btn btn-default" %>
 				</div>
 			</div>
-			<%= link_to "Back", websites_path,  class: "btn"%>
 			<% if current_user.isAdmin? %>
-				<%= link_to "Edit website", edit_website_path(@website), class: "btn"%>
-				<%= link_to "Delete website", website_path(@website), method: :delete, data: { confirm: "Are you sure?" }, class: "btn"%>
+				<%= button_to "Edit website", edit_website_path(@website), :method => :get, class: "btn btn-default" %>
+				<%= button_to "Delete website", website_path(@website), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-default" %>
 			<% end %>
 		</div>
 	</div>
